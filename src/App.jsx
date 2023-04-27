@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
@@ -24,15 +24,7 @@ const App = () => {
     },
   ]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const {data} = await axios.get(
-          "https://jsonplaceholder.cypress.io/todos?_limit=10"
-        );
-        setTasks(data);
-    };
-    fetchTasks();
-  }, [])
+ 
 
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map((task) => {
@@ -61,28 +53,30 @@ const App = () => {
 
     setTasks(newTasks);
   };
-  
+
   return (
-    <Router>
+
       <div className="container">
         <Header />
-          <Route
-            path="/"
-            exact
-            render={() => (
-            <>
-              <AddTask handleTaskAddition={handleTaskAddition} />
-              <Tasks
-                tasks={tasks}
-                handleTaskClick={handleTaskClick}
-                handleTaskDeletion={handleTaskDeletion}
-              />
-            </>
-            )}
-          />
-          <Route path="/:taskTitle" exact component={TaskDetails} />
+          <Routes>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <>
+                  <AddTask handleTaskAddition={handleTaskAddition} />
+                  <Tasks
+                    tasks={tasks}
+                    handleTaskClick={handleTaskClick}
+                    handleTaskDeletion={handleTaskDeletion}
+                  />
+                </>
+              )}
+            />
+            <Route path="/:taskTitle"  component={TaskDetails} />
+          </Routes>
       </div>
-    </Router>
+
   );
 };
 

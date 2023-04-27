@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import Button from "./Button"
 
@@ -7,10 +7,10 @@ import "./TaskDetails.css";
 
 const TaskDetails = () => {
     const params = useParams();
-    const history = useHistory();
+    const history = useNavigate();
 
     const handleBackButtonClick = () => {
-        history.goBack();
+        history("/");
     }
 
     return ( 
